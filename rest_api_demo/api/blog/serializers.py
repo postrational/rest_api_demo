@@ -7,8 +7,8 @@ blog_post = api.model('Blog post', {
     'body': fields.String(required=True, description='Article content'),
     'status': fields.String(required=True, enum=['DRAFT', 'PUBLISHED', 'DELETED']),
     'pub_date': fields.DateTime,
-    'category_id': fields.String(attribute='category.id'),
-    'category': fields.String(attribute=lambda x: x.category.name),
+    'category_id': fields.Integer(attribute='category.id'),
+    'category': fields.String(attribute='category.id'),
 
     # 'slug': fields.String(required=True, pattern='^[a-z0-9-]+$'),
     # 'excerpt': fields.String(description='Short excerpt of article'),
