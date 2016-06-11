@@ -2,7 +2,8 @@ import logging.config
 
 from flask import Flask, Blueprint
 from rest_api_demo import settings
-from rest_api_demo.api.blog.endpoints import ns as blog_namespace
+from rest_api_demo.api.blog.endpoints.posts import ns as blog_posts_namespace
+from rest_api_demo.api.blog.endpoints.categories import ns as blog_categories_namespace
 from rest_api_demo.api.restplus import api
 from rest_api_demo.database import db
 
@@ -17,13 +18,15 @@ def configure_app(flask_app):
     flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = settings.SQLALCHEMY_TRACK_MODIFICATIONS
     flask_app.config['SWAGGER_UI_DOC_EXPANSION'] = settings.RESTPLUS_SWAGGER_UI_DOC_EXPANSION
     flask_app.config['RESTPLUS_VALIDATE'] = settings.RESTPLUS_VALIDATE
+    flask_app.config['RESTPLUS_MASK_SWAGGER'] = settings.RESTPLUS_MASK_SWAGGER
 
 
 def initialize_app(flask_app):
     configure_app(flask_app)
     blueprint = Blueprint('api', __name__, url_prefix='/api')
     api.init_app(blueprint)
-    api.add_namespace(blog_namespace)
+    api.add_namespace(blog_posts_namespace)
+    api.add_namespace(blog_categories_namespace)
     flask_app.register_blueprint(blueprint)
     db.init_app(app)
 
