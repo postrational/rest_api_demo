@@ -1,1 +1,2 @@
-flask-restplus
+flask-restplus==0.9.2
+Flask-SQLAlchemy==2.1

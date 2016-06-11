@@ -1,8 +1,10 @@
 import logging.config
 
 from flask import Flask, Blueprint
+from rest_api_demo import settings
 from rest_api_demo.api.blog.endpoints import ns as blog_namespace
 from rest_api_demo.api.restplus import api
+from rest_api_demo.database import db
 
 app = Flask(__name__)
 logging.config.fileConfig('logging.conf')
@@ -10,9 +12,11 @@ log = logging.getLogger(__name__)
 
 
 def configure_app(flask_app):
-    flask_app.config['SERVER_NAME'] = 'localhost:8888'
-    flask_app.config.SWAGGER_UI_DOC_EXPANSION = 'list'
-    flask_app.config.RESTPLUS_VALIDATE = True
+    flask_app.config['SERVER_NAME'] = settings.FLASK_SERVER_NAME
+    flask_app.config['SQLALCHEMY_DATABASE_URI'] = settings.SQLALCHEMY_DATABASE_URI
+    flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = settings.SQLALCHEMY_TRACK_MODIFICATIONS
+    flask_app.config['SWAGGER_UI_DOC_EXPANSION'] = settings.RESTPLUS_SWAGGER_UI_DOC_EXPANSION
+    flask_app.config['RESTPLUS_VALIDATE'] = settings.RESTPLUS_VALIDATE
 
 
 def initialize_app(flask_app):
@@ -21,11 +25,12 @@ def initialize_app(flask_app):
     api.init_app(blueprint)
     api.add_namespace(blog_namespace)
     flask_app.register_blueprint(blueprint)
+    db.init_app(app)
 
 
 def main():
     initialize_app(app)
-    print('>>>>> Starting development server at http://{}/api/ <<<<<'.format(app.config['SERVER_NAME']))
+    log.info('>>>>> Starting development server at http://{}/api/ <<<<<'.format(app.config['SERVER_NAME']))
     app.run(debug=True)
 
 if __name__ == "__main__":
