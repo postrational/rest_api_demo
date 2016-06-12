@@ -41,6 +41,7 @@ class PostsCollection(Resource):
 
 
 @ns.route('/<int:id>')
+@api.response(404, 'Post not found.')
 class PostItem(Resource):
 
     @api.marshal_with(blog_post)

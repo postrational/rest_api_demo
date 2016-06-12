@@ -15,7 +15,7 @@ ns = api.namespace('blog/categories', description='Operations related to blog ca
 @ns.route('/')
 class CategoryCollection(Resource):
 
-    @api.marshal_with(category)
+    @api.marshal_list_with(category)
     def get(self):
         """
         Returns list of blog categories.
@@ -35,6 +35,7 @@ class CategoryCollection(Resource):
 
 
 @ns.route('/<int:id>')
+@api.response(404, 'Category not found.')
 class CategoryItem(Resource):
 
     @api.marshal_with(category_with_posts)
@@ -49,6 +50,18 @@ class CategoryItem(Resource):
     def put(self, id):
         """
         Updates a blog category.
+
+        Use this method to change the name of a blog category.
+
+        * Send a JSON object with the new name in the request body.
+
+        ```
+        {
+          "name": "New Category Name"
+        }
+        ```
+
+        * Specify the ID of the category to modify in the request URL path.
         """
         data = request.json
         update_category(id, data)
