@@ -9,9 +9,6 @@ blog_post = api.model('Blog post', {
     'pub_date': fields.DateTime,
     'category_id': fields.Integer(attribute='category.id'),
     'category': fields.String(attribute='category.id'),
-
-    # 'slug': fields.String(required=True, pattern='^[a-z0-9-]+$'),
-    # 'excerpt': fields.String(description='Short excerpt of article'),
 })
 
 pagination = api.model('A page of results', {
