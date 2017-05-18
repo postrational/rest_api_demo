@@ -22,5 +22,6 @@ def default_error_handler(e):
 
 @api.errorhandler(NoResultFound)
 def database_not_found_error_handler(e):
+    'No results found in database'
     log.warning(traceback.format_exc())
     return {'message': 'A database result was required but none was found.'}, 404
