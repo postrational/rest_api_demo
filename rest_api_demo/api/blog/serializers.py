@@ -7,7 +7,7 @@ blog_post = api.model('Blog post', {
     'body': fields.String(required=True, description='Article content'),
     'pub_date': fields.DateTime,
     'category_id': fields.Integer(attribute='category.id'),
-    'category': fields.String(attribute='category.id'),
+    'category': fields.String(attribute='category.name'),
 })
 
 pagination = api.model('A page of results', {
