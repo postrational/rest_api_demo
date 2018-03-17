@@ -1,5 +1,6 @@
 import logging.config
 
+import os
 from flask import Flask, Blueprint
 from rest_api_demo import settings
 from rest_api_demo.api.blog.endpoints.posts import ns as blog_posts_namespace
@@ -8,7 +9,8 @@ from rest_api_demo.api.restplus import api
 from rest_api_demo.database import db
 
 app = Flask(__name__)
-logging.config.fileConfig('logging.conf')
+logging_conf_path = os.path.normpath(os.path.join(os.path.dirname(__file__), '../logging.conf'))
+logging.config.fileConfig(logging_conf_path)
 log = logging.getLogger(__name__)
 
 
@@ -38,6 +40,7 @@ def main():
     initialize_app(app)
     log.info('>>>>> Starting development server at http://{}/api/ <<<<<'.format(app.config['SERVER_NAME']))
     app.run(debug=settings.FLASK_DEBUG)
+
 
 if __name__ == "__main__":
     main()
