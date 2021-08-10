@@ -13,7 +13,7 @@ docker rm rest-api-demo
 docker run -d -p 9999:8888 --name=rest-api-demo maodouzi/rest-api-demo:3.9.6
 ```
 
-open the URL <http://localhost:9999/api/>
+Open the URL <http://localhost:9999/api/>
 
 ## Development
 
@@ -28,8 +28,9 @@ Now let’s set up the app for development and start it:
 
 (venv) $ python setup.py develop
 (venv) $ python rest_api_demo/app.py
-OK, everything should be ready. In your browser, open the URL <http://localhost:8888/api/>
 ```
+
+OK, everything should be ready. In your browser, open the URL <http://localhost:8888/api/>
 
 ## Build Image
 
